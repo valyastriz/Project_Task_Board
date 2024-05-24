@@ -21,48 +21,54 @@
     <p class="lead">A simple Kanban board for task management</p>
   </header>
   <div class="container">
+    
     <!-- Button trigger modal -->
     <div class="text-center mb-5">
       <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
+
     <!-- Todo: Create a modal with a form to add tasks -->
-    <div class="modal-body">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="modal-header">
-              <h5 class="addTaskHeader">Add Task</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <div class="modal fade" id="formModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label for="taskTitle" class="form-label">Task Title</label>
+                    <input type="text" class="form-control" id="taskTitle">
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                  <div class="mb-3">
+                    <label for="taskDueDate" class="form-label">Task Due Date</label>
+                    <input type="text" class="form-control" id="taskDueDate">
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-12">
+                  <div class="mb-3">
+                    <label for="taskDescription" class="form-label">Task Description</label>
+                    <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+                  </div>
+              </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="mb-3">
-              <label for="taskTitle" class="form-label">Task Title</label>
-              <input type="text" class="form-control" id="taskTitle">
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save</button>
           </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="mb-3">
-              <label for="taskDueDate" class="form-label">Task Due Date</label>
-              <input type="text" class="form-control" id="taskDueDate">
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-12">
-            <div class="mb-3">
-              <label for="taskDescription" class="form-label">Task Description</label>
-              <textarea class="form-control" id="taskDescription" rows="3"></textarea>
-            </div>
-          <div class="col-12">
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-          </div>
-          <div class="col-sm-8 col-md-3"></div>
         </div>
       </div>
     </div>
+
+    <!--End of modal form -->
+
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
         <div id="to-do" class="card border-light mb-3 lane flex-grow-1">

@@ -39,4 +39,13 @@ $(document).ready(function () {
         changeYear: true,
       });
 
+
+    // trigger modal to pop-up
+    const myModal = document.getElementById('#formModal')
+    const myInput = document.getElementById('myInput')
+
+    myModal.addEventListener('shown.bs.modal', () => {
+  myInput.focus()
+    })
+
 });
