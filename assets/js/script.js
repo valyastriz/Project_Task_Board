@@ -2,6 +2,21 @@
 let taskList = JSON.parse(localStorage.getItem("tasks"));
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 
+function readTasksFromStorage() {
+  
+    //Retrieve projects from localStorage and parse the JSON to an array. If there are no projects in localStorage, initialize an empty array and return it.
+    let tasks = JSON.parse(localStorage.getItem('tasks'));
+  
+    if(!tasks) {
+      tasks = []
+    }
+    return tasks;
+  }
+
+  function saveTasksToLocalStorage(tasks) {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
     id = crypto.randomIIUD();
@@ -19,8 +34,27 @@ function renderTaskList() {
 }
 
 // Todo: create a function to handle adding a new task
-function handleAddTask(event){
+function handleAddTask(event, generateTaskId){
+    //create object from the data entered into the form 
+    event.preventDefault();
+    const taskTitle = taskTitle.val();
+    const taskDueDate = taskDueDate.val();
+    const taskDescription = taskDescription.val();
 
+    const newTask = {
+        id: generateTaskId(),
+        taskTitle: taskTitle,
+        taskDueDate: taskDueDate,
+        taskDescription: taskDescription,
+        status: 'to-do'
+    }
+
+    // pull the tasks from the localstorate and push the new task to the array
+    const tasks = readTasksFromStorage();
+    tasks.push(newTask);
+
+    //save the updated tasks array to local storage
+    saveTasksToLocalStorage(tasks);
 }
 
 // Todo: create a function to handle deleting a task
