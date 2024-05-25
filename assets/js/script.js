@@ -30,7 +30,7 @@ function createTaskCard(task) {
     taskCard.attr('taskCardId', task.id);
     const cardHeader = $('<div>').addClass('card-header h4').text(task.taskTitle);
     const cardBody = $('<div>').addClass('card-body');
-    const cardDescription = ('<p>').addClass('card-text').text(task.taskDescription);
+    const cardDescription = $('<p>').addClass('card-text').text(task.taskDescription);
     const cardDueDate = $('<p>').addClass('card-text').text(task.taskDueDate);
 
     //delete button on task card
@@ -50,6 +50,7 @@ function createTaskCard(task) {
             taskCard.addClass('bg-danger text-white');
             cardDeleteBtn.addClass('border-light');
         }
+    }
 
     //append card description, due date and delete button to the card
     cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
@@ -59,11 +60,11 @@ function createTaskCard(task) {
 
     //return the card so it can be appended to the correct lane
     return taskCard;
-}}
+}
 
 // Todo: create a function to render the task list and make cards draggable
-function renderTaskList() {
-    const tasks = readTasksFromStorage();
+function renderTaskList(tasks) {
+    console.log('in render taks list');
 
     //empty existing cards out of the lanes
     const todoList = $('#todo-cards');
@@ -77,7 +78,7 @@ function renderTaskList() {
 
     //loop through tasks array and create task cards for each status
     for (let task of tasks) {
-        const tasKCard = createTaskCard(task);
+        const taskCard = createTaskCard(task);
         if (task.status === 'to-do') {
             todoList.append(taskCard);
         }
@@ -129,8 +130,7 @@ function handleAddTask(event){
     //save the updated tasks array to local storage
     saveTasksToLocalStorage(tasks);
 
-    //render the task list
-    renderTaskList();
+    
 
     //clear form inputs
     $('#taskTitle').val('');
@@ -139,7 +139,10 @@ function handleAddTask(event){
 
     // Close the modal
     $('#formModal').modal('hide');
-    return tasks;
+    //render the task list
+
+    renderTaskList(tasks);
+
 }
 
 // Todo: create a function to handle deleting a task
@@ -168,5 +171,6 @@ $(document).ready(function () {
     });
 
     $('#save-task').on('click', handleAddTask);
-
+    const tasks = readTasksFromStorage();
+    renderTaskList(tasks);
 });
