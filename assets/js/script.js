@@ -37,7 +37,7 @@ function createTaskCard(task) {
     const cardDeleteBtn = $('<button>')
         .addClass('btn btn-danger delete')
         .text('Delete')
-        .attr('taskCardId', task.id);
+        .attr('data-task-id', task.id);
 
     if (task.taskDueDate && task.status !== 'done') {
         const now = dayjs();
@@ -145,7 +145,19 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
-    
+    event.preventDefault();
+    const taskId = $(this).attr('data-task-id');
+    const tasks = readTasksFromStorage();
+
+    //loop through the tasks array and remove the project witht the matching id
+    tasks.forEach((task) => {
+        if(task.id === taskId) {
+            tasks.splice(tasks.indexOf(task), 1)
+        }
+    })
+    saveTasksToLocalStorage(tasks);
+
+    renderTaskList(tasks);
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
