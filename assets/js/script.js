@@ -27,7 +27,7 @@ function createTaskCard(task) {
     //create a new card el and add class for card,
     const taskCard = $('<div>');
     taskCard.addClass('card project-card draggable my-3');
-    taskCard.attr('taskCardId', task.id);
+    taskCard.attr('data-id', task.id);
     const cardHeader = $('<div>').addClass('card-header h4').text(task.taskTitle);
     const cardBody = $('<div>').addClass('card-body');
     const cardDescription = $('<p>').addClass('card-text').text(task.taskDescription);
@@ -64,7 +64,6 @@ function createTaskCard(task) {
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList(tasks) {
-    console.log('in render taks list');
 
     //empty existing cards out of the lanes
     const todoList = $('#todo-cards');
@@ -131,7 +130,6 @@ function handleAddTask(event){
     saveTasksToLocalStorage(tasks);
 
     
-
     //clear form inputs
     $('#taskTitle').val('');
     $('#taskDueDate').val('');
@@ -152,7 +150,22 @@ function handleDeleteTask(event){
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
+    //read from local storage
+    const tasks = readTasksFromStorage();
+    // get the project id from the event
+    const taskId = ui.draggable[0].dataset.id
+    // get the id of the lane that  the card was dropped into
+    const newStatus = event.target.id;
 
+    for(let task of tasks) {
+        //find the card by the id and update the status
+        if (task.id === taskId) {
+            task.status = newStatus;
+        }
+    }
+    //save the udated projcets array to local storage
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    renderTaskList(tasks);
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
@@ -173,4 +186,9 @@ $(document).ready(function () {
     $('#save-task').on('click', handleAddTask);
     const tasks = readTasksFromStorage();
     renderTaskList(tasks);
+
+    $('.lane').droppable({
+        accept: ".draggable",
+        drop: handleDrop
+    });
 });
