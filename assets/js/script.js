@@ -26,7 +26,7 @@ function generateTaskId() {
 function createTaskCard(task) {
     //create a new card el and add class for card,
     const taskCard = $('<div>');
-    taskCard.addClass('card project-card draggable my-3');
+    taskCard.addClass('card task-card draggable my-3');
     taskCard.attr('data-id', task.id);
     const cardHeader = $('<div>').addClass('card-header h4').text(task.taskTitle);
     const cardBody = $('<div>').addClass('card-body');
