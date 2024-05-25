@@ -43,7 +43,7 @@ To run the Task Board application locally:
 3. Open the index.html file in your preferred web browser.
 
 ## Usage
-1. Open the application in a web browser.
+1. Open the application in a web browser. You can assess the live deployed site at the following URL:[Deployed Application URL](https://valyastriz.github.io/Project_Task_Board/)
 2. Click the "Add Task" button to open the modal dialog.
 3. Enter the task title, description, and deadline date.
 4. Click the "Save" button to add the task to the board.
@@ -69,11 +69,11 @@ To run the Task Board application locally:
 
 The application is deployed at the following URL:
 
-## Acknowledgements
-Special thanks to ChatGPT for assisting with writing this README
-
 [Deployed Application URL](https://valyastriz.github.io/Project_Task_Board/)
 
 The GitHub repository is available at:
 
 [GitHub Repository](https://github.com/valyastriz/Project_Task_Board.git)
+
+## Acknowledgements
+Special thanks to ChatGPT for assisting with writing this README
