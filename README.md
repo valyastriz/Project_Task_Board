@@ -69,6 +69,9 @@ To run the Task Board application locally:
 
 The application is deployed at the following URL:
 
+## Acknowledgements
+Special thanks to ChatGPT for assisting with writing this README
+
 [Deployed Application URL](https://valyastriz.github.io/Project_Task_Board/)
 
 The GitHub repository is available at:
