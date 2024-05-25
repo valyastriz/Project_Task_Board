@@ -19,8 +19,7 @@ function readTasksFromStorage() {
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
-    id = crypto.randomIIUD();
-    return id;
+    return crypto.randomUUID();
 }
 
 // Todo: create a function to create a task card
@@ -34,12 +33,12 @@ function renderTaskList() {
 }
 
 // Todo: create a function to handle adding a new task
-function handleAddTask(event, generateTaskId){
+function handleAddTask(event){
     //create object from the data entered into the form 
     event.preventDefault();
-    const taskTitle = taskTitle.val();
-    const taskDueDate = taskDueDate.val();
-    const taskDescription = taskDescription.val();
+    const taskTitle = $('#taskTitle').val();
+    const taskDueDate = $('#taskDueDate').val();
+    const taskDescription = $('#taskDescription').val();
 
     const newTask = {
         id: generateTaskId(),
@@ -55,6 +54,16 @@ function handleAddTask(event, generateTaskId){
 
     //save the updated tasks array to local storage
     saveTasksToLocalStorage(tasks);
+
+    //_-----------_______________________----------------------------------------------------need to come back to finish re-rendering to screen-------------------
+
+    //clear form inputs
+    $('#taskTitle').val('');
+    $('#taskDueDate').val('');
+    $('#taskDescription').val('');
+
+    // Close the modal
+    $('#formModal').modal('hide');
 }
 
 // Todo: create a function to handle deleting a task
@@ -76,11 +85,12 @@ $(document).ready(function () {
 
 
     // trigger modal to pop-up
-    const myModal = document.getElementById('#formModal')
-    const myInput = document.getElementById('myInput')
+    const formModal = document.getElementById('formModal');
+    const taskTitle = document.getElementById('taskTitle');
+    formModal.addEventListener('shown.bs.modal', () => {
+    taskTitle.focus();
+    });
 
-    myModal.addEventListener('shown.bs.modal', () => {
-  myInput.focus()
-    })
+    $('#save-task').on('click', handleAddTask);
 
 });
