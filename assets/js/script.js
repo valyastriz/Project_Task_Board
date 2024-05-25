@@ -23,7 +23,7 @@ function generateTaskId() {
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(tasks) {
+function createTaskCard(task) {
     //create a new card el and add class for card,
     const taskCard = $('<div>');
     taskCard.addClass('card project-card draggable my-3');
@@ -88,6 +88,22 @@ function renderTaskList() {
             doneList.append(taskCard);
         }
     }
+
+    $('.draggable').draggable({
+        opacity: 0.7,
+        zIndex: 100,
+        // create clone of the card that is dragged
+        helper: function (e) {
+        //Check if the target of the drag event is the card itself or a child element. If it is the card itself, clone it, otherwise find the parent card  that is draggable and clone that.
+        const original = $(e.target).hasClass('ui-draggable')
+            ? $(e.target)
+            : $(e.target).closest('.ui-draggable');
+        // return the clone with the width set to the width of the original card. 
+        return original.clone().css({
+            width: original.outerWidth(),
+        });
+        },
+    });
 }
 
 // Todo: create a function to handle adding a new task
@@ -113,7 +129,8 @@ function handleAddTask(event){
     //save the updated tasks array to local storage
     saveTasksToLocalStorage(tasks);
 
-    //_-----------_______________________----------------------------------------------------need to come back to finish re-rendering to screen-------------------
+    //render the task list
+    renderTaskList();
 
     //clear form inputs
     $('#taskTitle').val('');
