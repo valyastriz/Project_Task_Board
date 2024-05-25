@@ -23,13 +23,71 @@ function generateTaskId() {
 }
 
 // Todo: create a function to create a task card
-function createTaskCard(task) {
+function createTaskCard(tasks) {
     //create a new card el and add class for card,
-}
+    const taskCard = $('<div>');
+    taskCard.addClass('card project-card draggable my-3');
+    taskCard.attr('taskCardId', task.id);
+    const cardHeader = $('<div>').addClass('card-header h4').text(task.taskTitle);
+    const cardBody = $('<div>').addClass('card-body');
+    const cardDescription = ('<p>').addClass('card-text').text(task.taskDescription);
+    const cardDueDate = $('<p>').addClass('card-text').text(task.taskDueDate);
+
+    //delete button on task card
+    const cardDeleteBtn = $('<button>')
+        .addClass('btn btn-danger delete')
+        .text('Delete')
+        .attr('taskCardId', task.id);
+
+    if (task.taskDueDate && task.status !== 'done') {
+        const now = dayjs();
+        const taskDueDate = dayjs(task.taskDueDate, 'DD/MM/YYYY');
+    
+        // ? If the task is due today, make the card yellow. If it is overdue, make it red.
+        if (now.isSame(taskDueDate, 'day')) {
+            taskCard.addClass('bg-warning text-white');
+        } else if (now.isAfter(taskDueDate)) {
+            taskCard.addClass('bg-danger text-white');
+            cardDeleteBtn.addClass('border-light');
+        }
+
+    //append card description, due date and delete button to the card
+    cardBody.append(cardDescription, cardDueDate, cardDeleteBtn);
+
+    //append the card header and card body to the card
+    taskCard.append(cardHeader, cardBody);
+
+    //return the card so it can be appended to the correct lane
+    return taskCard;
+}}
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+    const tasks = readTasksFromStorage();
 
+    //empty existing cards out of the lanes
+    const todoList = $('#todo-cards');
+    todoList.empty();
+
+    const inProgressList = $('#in-progress-cards');
+    inProgressList.empty();
+
+    const doneList = $('#done-cards');
+    doneList.empty();
+
+    //loop through tasks array and create task cards for each status
+    for (let task of tasks) {
+        const tasKCard = createTaskCard(task);
+        if (task.status === 'to-do') {
+            todoList.append(taskCard);
+        }
+        else if (task.status === 'in-progress') {
+            inProgressList.append(taskCard);
+        }
+        else if (task.status === 'done') {
+            doneList.append(taskCard);
+        }
+    }
 }
 
 // Todo: create a function to handle adding a new task
@@ -64,6 +122,7 @@ function handleAddTask(event){
 
     // Close the modal
     $('#formModal').modal('hide');
+    return tasks;
 }
 
 // Todo: create a function to handle deleting a task
