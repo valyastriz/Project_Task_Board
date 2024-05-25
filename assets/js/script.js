@@ -145,7 +145,7 @@ function handleAddTask(event){
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
-
+    
 }
 
 // Todo: create a function to handle dropping a task into a new status lane
@@ -183,9 +183,15 @@ $(document).ready(function () {
     taskTitle.focus();
     });
 
+    
     $('#save-task').on('click', handleAddTask);
     const tasks = readTasksFromStorage();
     renderTaskList(tasks);
+
+    //listen for dlete button click event
+    const taskDisplayEl = $('.lane');
+    taskDisplayEl.on('click', '.btn', handleDeleteTask);
+    
 
     $('.lane').droppable({
         accept: ".draggable",
